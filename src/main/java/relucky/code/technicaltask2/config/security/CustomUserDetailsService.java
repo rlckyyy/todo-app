@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 import relucky.code.technicaltask2.common.exception.InvalidCredentialsException;
 import relucky.code.technicaltask2.domain.repository.UserRepository;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
@@ -18,7 +16,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         var optional = userRepository.findByEmail(email);
         if (optional.isEmpty()){
-            throw new InvalidCredentialsException();
+            throw new InvalidCredentialsException("Invalid credentials of user");
         }
         return optional.get();
     }

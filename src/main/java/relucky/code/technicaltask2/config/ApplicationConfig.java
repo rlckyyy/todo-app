@@ -14,7 +14,6 @@ import relucky.code.technicaltask2.config.security.CustomUserDetailsService;
 import relucky.code.technicaltask2.config.security.JwtFilter;
 
 @Configuration
-@EnableWebSecurity
 @RequiredArgsConstructor
 public class ApplicationConfig {
     private final CustomUserDetailsService customUserDetailsService;
