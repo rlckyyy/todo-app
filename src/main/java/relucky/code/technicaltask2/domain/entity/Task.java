@@ -3,6 +3,8 @@ package relucky.code.technicaltask2.domain.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @AllArgsConstructor@NoArgsConstructor
 @Getter@Setter
@@ -16,4 +18,6 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<File> fileList;
 }

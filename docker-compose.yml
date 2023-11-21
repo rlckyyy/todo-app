@@ -23,9 +23,8 @@ services:
       MINIO_ACCESS_KEY_FILE: access_key
       MINIO_SECRET_KEY_FILE: secret_key
     volumes:
-      - minio_storage/:data
+      - minio_storage:/data
     command: server --console-address ":9001" /data
-
 volumes:
   postgres:
   minio_storage:

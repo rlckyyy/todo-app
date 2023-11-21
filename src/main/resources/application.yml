@@ -14,7 +14,7 @@ jwt:
 
 minio:
   url: http://localhost:9001
-  bucket: files-bucket
+  bucket: file-system
   access-key: minioadmin
   secret-key: minioadmin
   port: 9000
