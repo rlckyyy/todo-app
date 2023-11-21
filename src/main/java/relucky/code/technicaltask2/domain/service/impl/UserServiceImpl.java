@@ -1,15 +1,17 @@
 package relucky.code.technicaltask2.domain.service.impl;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import relucky.code.technicaltask2.common.exception.TaskNotFoundException;
+import relucky.code.technicaltask2.common.exception.UserNotFoundException;
 import relucky.code.technicaltask2.domain.dto.TaskDTO;
+import relucky.code.technicaltask2.domain.dto.UserDTO;
 import relucky.code.technicaltask2.domain.entity.Task;
 import relucky.code.technicaltask2.domain.entity.User;
 import relucky.code.technicaltask2.domain.mapper.TaskMapper;
+import relucky.code.technicaltask2.domain.mapper.UserMapper;
 import relucky.code.technicaltask2.domain.repository.TaskRepository;
 import relucky.code.technicaltask2.domain.repository.UserRepository;
 import relucky.code.technicaltask2.domain.service.UserService;
@@ -21,45 +23,29 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    private final TaskRepository taskRepository;
-    private final TaskMapper taskMapper;
+    private final UserMapper userMapper;
 
 
     @Override
-    public void createTask(TaskDTO taskDTO) {
-        Task task = taskMapper.toModel(taskDTO);
-        task.setUser(getUser());
-        taskRepository.save(task);
-    }
-
-    @Override
-    public void deleteTask(Long id) {
-        User currentUser = getUser();
-        Optional<Task> taskOptional = taskRepository.findById(id);
-        if (taskOptional.isPresent() && taskOptional.get().getUser().equals(currentUser)){
-            taskRepository.deleteById(id);
-        }
-    }
-
-    @Override
-    public List<TaskDTO> findAllTask() {
-        return taskRepository.findAllByUser(getUser()).stream().map(taskMapper::toDto).toList();
-    }
-
-    @Override
-    public TaskDTO findTask(Long id) {
-        User currentUser = getUser();
-        Optional<Task> taskOptional = taskRepository.findById(id);
-        if (taskOptional.isPresent() && taskOptional.get().getUser().equals(currentUser)){
-            return taskMapper.toDto(taskOptional.get());
+    public UserDTO deleteUser(Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            UserDTO userDTO = userMapper.toDTO(user);
+            userRepository.deleteById(id);
+            return userDTO;
         } else {
-            throw new TaskNotFoundException("Task not found or task is not your");
+            throw new UserNotFoundException("User with this id does not exist");
         }
     }
-    private User getUser(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-        System.out.println(email);
-        return userRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+    @Override
+    public List<UserDTO> findAll() {
+        return userRepository.findAll().stream().map(userMapper::toDTO).toList();
+    }
+
+    @Override
+    public UserDTO findOne(Long id) {
+        return userMapper.toDTO(userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("User with this id does not exist")));
     }
 }

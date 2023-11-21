@@ -1,12 +1,12 @@
 package relucky.code.technicaltask2.domain.service;
 
 import relucky.code.technicaltask2.domain.dto.TaskDTO;
+import relucky.code.technicaltask2.domain.dto.UserDTO;
 
 import java.util.List;
 
 public interface UserService {
-    void createTask(TaskDTO taskDTO);
-    void deleteTask(Long id);
-    List<TaskDTO> findAllTask();
-    TaskDTO findTask(Long id);
+    UserDTO deleteUser(Long id);
+    List<UserDTO> findAll();
+    UserDTO findOne(Long id);
 }
