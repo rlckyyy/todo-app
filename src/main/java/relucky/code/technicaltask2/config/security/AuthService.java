@@ -31,7 +31,7 @@ public class AuthService {
 
     public Map<String, Object> save(UserDTO dto) {
         var model = userMapper.toModel(dto);
-        model.setPassword(passwordEncoder.encode(dto.getPassword()));
+        model.setPassword(passwordEncoder.encode(dto.password()));
         model.setRole(Role.USER);
         var user = userRepository.save(model);
         return Map.of("user", user, "tokens", tokenResponse(user));

@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import relucky.code.technicaltask2.common.enums.TokenType;
-import relucky.code.technicaltask2.domain.repository.UserRepository;
 
 import java.security.Key;
 import java.time.ZonedDateTime;

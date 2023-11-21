@@ -1,18 +1,11 @@
 package relucky.code.technicaltask2.domain.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import relucky.code.technicaltask2.common.exception.TaskNotFoundException;
 import relucky.code.technicaltask2.common.exception.UserNotFoundException;
-import relucky.code.technicaltask2.domain.dto.TaskDTO;
 import relucky.code.technicaltask2.domain.dto.UserDTO;
-import relucky.code.technicaltask2.domain.entity.Task;
 import relucky.code.technicaltask2.domain.entity.User;
-import relucky.code.technicaltask2.domain.mapper.TaskMapper;
 import relucky.code.technicaltask2.domain.mapper.UserMapper;
-import relucky.code.technicaltask2.domain.repository.TaskRepository;
 import relucky.code.technicaltask2.domain.repository.UserRepository;
 import relucky.code.technicaltask2.domain.service.UserService;
 
