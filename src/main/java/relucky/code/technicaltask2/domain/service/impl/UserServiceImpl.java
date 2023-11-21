@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import relucky.code.technicaltask2.common.exception.TaskNotFoundException;
 import relucky.code.technicaltask2.domain.dto.TaskDTO;
 import relucky.code.technicaltask2.domain.entity.Task;
 import relucky.code.technicaltask2.domain.entity.User;
@@ -30,6 +31,7 @@ public class UserServiceImpl implements UserService {
         task.setUser(getUser());
         taskRepository.save(task);
     }
+
     @Override
     public void deleteTask(Long id) {
         User currentUser = getUser();
@@ -51,12 +53,13 @@ public class UserServiceImpl implements UserService {
         if (taskOptional.isPresent() && taskOptional.get().getUser().equals(currentUser)){
             return taskMapper.toDto(taskOptional.get());
         } else {
-            throw new IllegalStateException("Task not found or task is not your");
+            throw new TaskNotFoundException("Task not found or task is not your");
         }
     }
     private User getUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
+        System.out.println(email);
         return userRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
 }

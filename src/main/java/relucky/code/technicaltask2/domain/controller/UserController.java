@@ -12,9 +12,8 @@ import relucky.code.technicaltask2.domain.service.UserService;
 public class UserController {
     private final UserService userService;
 
-
     @PostMapping("/create")
-    ResponseEntity<String> createTask(TaskDTO taskDTO){
+    ResponseEntity<String> createTask(@RequestBody TaskDTO taskDTO){
         userService.createTask(taskDTO);
         return ResponseEntity.ok("Successfully created");
     }
