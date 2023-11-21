@@ -5,11 +5,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import relucky.code.technicaltask2.common.exception.TaskNotFoundException;
+import relucky.code.technicaltask2.common.exception.UnauthorizedTaskAccessException;
 import relucky.code.technicaltask2.common.exception.UserNotFoundException;
 import relucky.code.technicaltask2.domain.dto.TaskDTO;
 import relucky.code.technicaltask2.domain.entity.Task;
 import relucky.code.technicaltask2.domain.entity.User;
 import relucky.code.technicaltask2.domain.mapper.TaskMapper;
+import relucky.code.technicaltask2.domain.repository.FileRepository;
 import relucky.code.technicaltask2.domain.repository.TaskRepository;
 import relucky.code.technicaltask2.domain.repository.UserRepository;
 import relucky.code.technicaltask2.domain.service.TaskService;
@@ -23,21 +25,32 @@ public class TaskServiceImpl implements TaskService {
     private final TaskMapper taskMapper;
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
+    private final FileRepository fileRepository;
     @Override
-    public void createTask(TaskDTO taskDTO) {
+    public TaskDTO createTask(TaskDTO taskDTO) {
         Task task = taskMapper.toModel(taskDTO);
         task.setUser(getUser());
         taskRepository.save(task);
+        return taskDTO;
     }
 
     @Override
-    public void deleteTask(Long id) {
+    public TaskDTO deleteTask(Long id) {
         User currentUser = getUser();
         Optional<Task> taskOptional = taskRepository.findById(id);
-        if (taskOptional.isPresent() && taskOptional.get().getUser().equals(currentUser)){
-            taskRepository.deleteById(id);
+        if (taskOptional.isPresent()){
+            Task task = taskOptional.get();
+            if (task.getUser().equals(currentUser)){
+                taskRepository.deleteById(id);
+                return taskMapper.toDto(task);
+            } else {
+                throw new UnauthorizedTaskAccessException("User does not have access to task with id: " + id);
+            }
+        } else {
+            throw new TaskNotFoundException("Task with id: " + id + " does not exist");
         }
     }
+
 
     @Override
     public List<TaskDTO> findAllTask() {
@@ -58,7 +71,6 @@ public class TaskServiceImpl implements TaskService {
     private User getUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
-        System.out.println(email);
         return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 }

@@ -1,5 +1,6 @@
 package relucky.code.technicaltask2.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,5 +17,6 @@ public class File {
     private String fileType;
     @ManyToOne
     @JoinColumn(name = "task_id", nullable = false)
+    @JsonIgnore
     private Task task;
 }

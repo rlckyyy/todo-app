@@ -34,7 +34,7 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         var l = List.of(new SimpleGrantedAuthority("ROLE_".concat(role.name())));
-        System.out.println(l.get(0).getAuthority());
+//        System.out.println(l.get(0).getAuthority());
         return l;
     }
 

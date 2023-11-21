@@ -14,16 +14,13 @@ import relucky.code.technicaltask2.domain.service.TaskService;
 public class TaskController {
     private final TaskService taskService;
     private final MinioService minioService;
-
     @PostMapping("/create")
-    ResponseEntity<String> createTask(@RequestBody TaskDTO taskDTO){
-        taskService.createTask(taskDTO);
-        return ResponseEntity.ok("Successfully created");
+    ResponseEntity<?> createTask(@RequestBody TaskDTO taskDTO){
+        return ResponseEntity.ok(taskService.createTask(taskDTO));
     }
     @DeleteMapping("/delete/{id}")
-    ResponseEntity<String> deleteTask(@PathVariable Long id){
-        taskService.deleteTask(id);
-        return ResponseEntity.ok("Successfully deleted");
+    ResponseEntity<?> deleteTask(@PathVariable Long id){
+        return ResponseEntity.ok(taskService.deleteTask(id));
     }
     @GetMapping
     ResponseEntity<?> getAllTask(){

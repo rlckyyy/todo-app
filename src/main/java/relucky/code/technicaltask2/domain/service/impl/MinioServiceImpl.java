@@ -78,7 +78,6 @@ public class MinioServiceImpl implements MinioService {
     private User getUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
-        System.out.println(email);
         return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 }
