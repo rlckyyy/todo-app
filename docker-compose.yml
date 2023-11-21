@@ -11,5 +11,21 @@ services:
       - "5433:5432"
     volumes:
       - postgres:/data/postgres
+  minio:
+    container_name: todo-minio
+    image: minio/minio:latest
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+      MINIO_ACCESS_KEY_FILE: access_key
+      MINIO_SECRET_KEY_FILE: secret_key
+    volumes:
+      - minio_storage/:data
+    command: server --console-address ":9001" /data
+
 volumes:
   postgres:
+  minio_storage:
