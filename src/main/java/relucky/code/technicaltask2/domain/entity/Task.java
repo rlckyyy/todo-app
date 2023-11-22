@@ -18,6 +18,6 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<File> fileList;
 }

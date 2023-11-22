@@ -1,9 +1,11 @@
 package relucky.code.technicaltask2.domain.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import relucky.code.technicaltask2.common.exception.TaskNotFoundException;
 import relucky.code.technicaltask2.common.exception.UnauthorizedTaskAccessException;
 import relucky.code.technicaltask2.common.exception.UserNotFoundException;
@@ -21,6 +23,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class TaskServiceImpl implements TaskService {
     private final TaskMapper taskMapper;
     private final TaskRepository taskRepository;
@@ -34,6 +37,7 @@ public class TaskServiceImpl implements TaskService {
         return taskDTO;
     }
 
+    @Transactional
     @Override
     public TaskDTO deleteTask(Long id) {
         User currentUser = getUser();
