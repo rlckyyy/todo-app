@@ -7,7 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import relucky.code.technicaltask2.common.exception.TaskNotFoundException;
-import relucky.code.technicaltask2.common.exception.UnauthorizedTaskAccessException;
+import relucky.code.technicaltask2.common.exception.UnauthorizedAccessException;
 import relucky.code.technicaltask2.common.exception.UserNotFoundException;
 import relucky.code.technicaltask2.domain.dto.TaskDTO;
 import relucky.code.technicaltask2.domain.entity.Task;
@@ -48,7 +48,7 @@ public class TaskServiceImpl implements TaskService {
                 taskRepository.deleteById(id);
                 return taskMapper.toDto(task);
             } else {
-                throw new UnauthorizedTaskAccessException("User does not have access to task with id: " + id);
+                throw new UnauthorizedAccessException("User does not have access to task with id: " + id);
             }
         } else {
             throw new TaskNotFoundException("Task with id: " + id + " does not exist");

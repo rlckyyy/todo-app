@@ -18,7 +18,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
-
     @Override
     public UserDTO deleteUser(Long id) {
         Optional<User> userOptional = userRepository.findById(id);

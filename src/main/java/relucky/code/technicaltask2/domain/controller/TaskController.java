@@ -34,4 +34,8 @@ public class TaskController {
     ResponseEntity<?> uploadFileToTask(@PathVariable Long id, @RequestParam("file") MultipartFile multipartFile){
         return ResponseEntity.ok(minioService.uploadFile(multipartFile,id));
     }
+    @DeleteMapping("/{taskId}/files/{fileId}")
+    ResponseEntity<?> deleteFileFromTask(@PathVariable("taskId") Long taskId, @PathVariable("fileId") Long fileId){
+        return ResponseEntity.ok(minioService.deleteFile(fileId, taskId));
+    }
 }
