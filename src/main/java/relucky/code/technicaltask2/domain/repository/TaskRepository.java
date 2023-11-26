@@ -13,8 +13,4 @@ import java.util.List;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findAllByUser(User user);
-
-    @Modifying
-    @Query("delete from Task t where t.id = :taskId")
-    void deleteTaskById(@Param("taskId") Long taskId);
 }

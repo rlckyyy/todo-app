@@ -31,11 +31,21 @@ public class User implements UserDetails {
     @JsonIgnore
     private List<Task> taskList;
 
+
+//    public User(Long id, String name, String email, Integer age, String password, Role role, List<Task> taskList) {
+//        this.id = id;
+//        this.name = name;
+//        this.email = email;
+//        this.age = age;
+//        this.password = password;
+//        this.role = role;
+//        this.taskList = taskList;
+//    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        var l = List.of(new SimpleGrantedAuthority("ROLE_".concat(role.name())));
-//        System.out.println(l.get(0).getAuthority());
-        return l;
+        var list = List.of(new SimpleGrantedAuthority("ROLE_".concat(role.name())));
+        return list;
     }
 
     @Override

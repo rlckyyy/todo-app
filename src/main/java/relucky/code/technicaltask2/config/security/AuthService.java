@@ -6,6 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import relucky.code.technicaltask2.common.enums.Role;
+import relucky.code.technicaltask2.common.exception.EmailAlreadyRegistered;
 import relucky.code.technicaltask2.common.payload.request.AuthRequest;
 import relucky.code.technicaltask2.common.payload.response.TokenResponse;
 import relucky.code.technicaltask2.domain.dto.UserDTO;
@@ -30,6 +31,9 @@ public class AuthService {
     private final CustomUserDetailsService userDetailsService;
 
     public Map<String, Object> save(UserDTO dto) {
+        if (userRepository.findByEmail(dto.email()).isPresent()){
+            throw new EmailAlreadyRegistered(dto.email() + "already exists in system");
+        }
         var model = userMapper.toModel(dto);
         model.setPassword(passwordEncoder.encode(dto.password()));
         model.setRole(Role.USER);

@@ -6,5 +6,4 @@ import relucky.code.technicaltask2.domain.entity.File;
 
 @Repository
 public interface FileRepository extends JpaRepository<File, Long> {
-    void deleteAllByTaskId(Long task_id);
 }
