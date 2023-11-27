@@ -3,7 +3,11 @@ package relucky.code.technicaltask2.domain.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import relucky.code.technicaltask2.domain.dto.UserDTO;
+import relucky.code.technicaltask2.domain.entity.User;
 import relucky.code.technicaltask2.domain.service.UserService;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -11,16 +15,16 @@ import relucky.code.technicaltask2.domain.service.UserService;
 public class AdminController {
     private final UserService userService;
     @DeleteMapping("/{id}")
-    ResponseEntity<?> deleteUser(@PathVariable Long id){
-        return ResponseEntity.ok(userService.deleteUser(id));
+    UserDTO deleteUser(@PathVariable Long id){
+        return userService.deleteUser(id);
     }
     @GetMapping
-    ResponseEntity<?> getAllUser(){
-        return ResponseEntity.ok(userService.findAll());
+    List<UserDTO> getAllUser(){
+        return userService.findAll();
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<?> getUserInfo(@PathVariable Long id){
-        return ResponseEntity.ok(userService.findOne(id));
+    UserDTO getUserInfo(@PathVariable Long id){
+        return userService.findOne(id);
     }
 }

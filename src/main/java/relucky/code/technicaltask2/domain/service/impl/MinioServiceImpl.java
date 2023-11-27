@@ -21,6 +21,7 @@ import relucky.code.technicaltask2.domain.repository.FileRepository;
 import relucky.code.technicaltask2.domain.repository.TaskRepository;
 import relucky.code.technicaltask2.domain.repository.UserRepository;
 import relucky.code.technicaltask2.domain.service.MinioService;
+import relucky.code.technicaltask2.domain.service.UserService;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -33,7 +34,7 @@ public class MinioServiceImpl implements MinioService {
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
     private final FileMapper fileMapper;
-
+    private final UserService userService;
 
     @Override
     public String uploadFileToMinio(MultipartFile file) {
@@ -56,7 +57,7 @@ public class MinioServiceImpl implements MinioService {
     @Override
     public File uploadFile(MultipartFile file, Long taskId) {
         Optional<Task> taskOptional = taskRepository.findById(taskId);
-        User currentUser = getUser();
+        User currentUser = userService.getUser();
         if (taskOptional.isPresent()){
             Task task = taskOptional.get();
             if (currentUser.getTaskList().contains(task)){
@@ -84,7 +85,7 @@ public class MinioServiceImpl implements MinioService {
     @Override
     public FileDTO deleteFile(Long fileId, Long taskId) {
         Optional<Task> taskOptional = taskRepository.findById(taskId);
-        User currentUser = getUser();
+        User currentUser = userService.getUser();
         if (taskOptional.isPresent()){
             Task task = taskOptional.get();
             if (currentUser.getTaskList().contains(task)){
@@ -126,9 +127,4 @@ public class MinioServiceImpl implements MinioService {
         }
     }
 
-    private User getUser(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-        return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User not found"));
-    }
 }

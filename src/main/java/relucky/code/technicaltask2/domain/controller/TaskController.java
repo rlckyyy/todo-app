@@ -26,7 +26,7 @@ public class TaskController {
     ResponseEntity<?> getAllTask(){
         return ResponseEntity.ok(taskService.findAllTask());
     }
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     ResponseEntity<?> getOne(@PathVariable Long id){
         return ResponseEntity.ok(taskService.findTask(id));
     }

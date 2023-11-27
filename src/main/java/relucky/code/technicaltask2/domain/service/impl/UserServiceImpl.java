@@ -1,6 +1,8 @@
 package relucky.code.technicaltask2.domain.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import relucky.code.technicaltask2.common.exception.UserNotFoundException;
 import relucky.code.technicaltask2.domain.dto.UserDTO;
@@ -38,6 +40,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO findOne(Long id) {
-        return userMapper.toDTO(userRepository.findById(id).orElseThrow(()-> new UserNotFoundException("User with this id does not exist")));
+        return userMapper.toDTO(userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User with this id does not exist")));
+    }
+
+    @Override
+    public User getUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 }

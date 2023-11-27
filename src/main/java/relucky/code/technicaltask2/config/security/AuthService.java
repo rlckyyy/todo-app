@@ -30,7 +30,7 @@ public class AuthService {
     private final CustomUserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
-    public Map<String, Object> register(UserDTO dto) {
+    public TokenResponse register(UserDTO dto) {
         if (userRepository.findByEmail(dto.email()).isPresent()){
             throw new EmailAlreadyRegistered(dto.email() + "already exists in system");
         }
@@ -38,20 +38,20 @@ public class AuthService {
         user.setRole(Role.USER);
         user.setPassword(passwordEncoder.encode(dto.password()));
         userRepository.save(user);
-        return Map.of("user", user, "tokens", tokenResponse(user));
+        return tokenResponse(user);
     }
 
-    public Map<String, Object> refresh(String refreshToken) {
+    public TokenResponse refresh(String refreshToken) {
         var email = jwtService.extractUsername(refreshToken , REFRESH);
         var user = userDetailsService.loadUserByUsername(email);
-        return Map.of("tokens" , tokenResponse((User) user));
+        return tokenResponse((User) user);
     }
 
-    public Map<String, Object> auth(AuthRequest authRequest) {
+    public TokenResponse auth(AuthRequest authRequest) {
         UsernamePasswordAuthenticationToken ur = new
                 UsernamePasswordAuthenticationToken(authRequest.email(), authRequest.password());
         var user = (User) manager.authenticate(ur).getPrincipal();
-        return Map.of("tokens", tokenResponse(user));
+        return tokenResponse(user);
     }
 
     private TokenResponse tokenResponse(User user) {

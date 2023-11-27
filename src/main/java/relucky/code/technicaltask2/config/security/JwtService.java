@@ -21,9 +21,10 @@ import java.util.function.Function;
 @Service
 @RequiredArgsConstructor
 public class JwtService {
-
-    private @Value("${jwt.issuer}") String issuer;
-    private @Value("${jwt.secret}") String secret;
+    @Value("${jwt.issuer}")
+    private String issuer;
+    @Value("${jwt.secret}")
+    private String secret;
 
     public String generateToken(TokenType token, Map<String, Object> claims, String subject) {
         var expiration = Date.from(ZonedDateTime.now().plusMinutes(token.getExpirationMinute()).toInstant());

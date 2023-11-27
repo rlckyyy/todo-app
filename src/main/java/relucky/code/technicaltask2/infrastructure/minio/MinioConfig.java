@@ -7,10 +7,14 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class MinioConfig {
-    private @Value("${minio.url}") String url;
-    private @Value("${minio.access-key}") String accessKey;
-    private @Value("${minio.secret-key}") String secretKey;
-    private @Value("${minio.port}") Integer port;
+    @Value("${minio.url}")
+    private String url;
+    @Value("${minio.access-key}")
+    private String accessKey;
+    @Value("${minio.secret-key}")
+    private String secretKey;
+    @Value("${minio.port}")
+    private Integer port;
 
     @Bean
     public MinioClient getMinioClient(){
