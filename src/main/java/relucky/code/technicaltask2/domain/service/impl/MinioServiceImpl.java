@@ -40,7 +40,7 @@ public class MinioServiceImpl implements MinioService {
     public String uploadFileToMinio(MultipartFile file) {
         try {
             String bucketName = "file-system";
-            String objectName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+            String objectName = UUID.randomUUID() + "_" + file.getOriginalFilename();
             PutObjectArgs putObjectArgs = PutObjectArgs.builder()
                     .bucket(bucketName)
                     .object(objectName)

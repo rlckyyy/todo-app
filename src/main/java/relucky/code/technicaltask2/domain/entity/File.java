@@ -12,8 +12,11 @@ public class File {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "filename")
     private String fileName;
+    @Column(name = "miniopath")
     private String minioPath;
+    @Column(name = "filetype")
     private String fileType;
     @ManyToOne
     @JoinColumn(name = "task_id", nullable = false)

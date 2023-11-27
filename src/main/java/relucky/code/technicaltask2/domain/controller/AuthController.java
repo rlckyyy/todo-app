@@ -19,7 +19,7 @@ public class AuthController {
     ) {
         return ResponseEntity
                 .status(201)
-                .body(authService.save(userDTO));
+                .body(authService.register(userDTO));
     }
 
     @PostMapping("/refresh-token")

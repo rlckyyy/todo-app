@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import relucky.code.technicaltask2.common.enums.Role;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -31,16 +32,13 @@ public class User implements UserDetails {
     @JsonIgnore
     private List<Task> taskList;
 
-
-//    public User(Long id, String name, String email, Integer age, String password, Role role, List<Task> taskList) {
-//        this.id = id;
-//        this.name = name;
-//        this.email = email;
-//        this.age = age;
-//        this.password = password;
-//        this.role = role;
-//        this.taskList = taskList;
-//    }
+    public User(String name, String email, Integer age, String password, Role role) {
+        this.name = name;
+        this.email = email;
+        this.age = age;
+        this.password = password;
+        this.role = role;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

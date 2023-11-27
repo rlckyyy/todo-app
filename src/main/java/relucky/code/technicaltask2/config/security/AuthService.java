@@ -26,25 +26,25 @@ public class AuthService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final JwtService jwtService;
-    private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager manager;
     private final CustomUserDetailsService userDetailsService;
+    private final PasswordEncoder passwordEncoder;
 
-    public Map<String, Object> save(UserDTO dto) {
+    public Map<String, Object> register(UserDTO dto) {
         if (userRepository.findByEmail(dto.email()).isPresent()){
             throw new EmailAlreadyRegistered(dto.email() + "already exists in system");
         }
-        var model = userMapper.toModel(dto);
-        model.setPassword(passwordEncoder.encode(dto.password()));
-        model.setRole(Role.USER);
-        var user = userRepository.save(model);
+        var user = userMapper.toModel(dto);
+        user.setRole(Role.USER);
+        user.setPassword(passwordEncoder.encode(dto.password()));
+        userRepository.save(user);
         return Map.of("user", user, "tokens", tokenResponse(user));
     }
 
     public Map<String, Object> refresh(String refreshToken) {
         var email = jwtService.extractUsername(refreshToken , REFRESH);
         var user = userDetailsService.loadUserByUsername(email);
-        return Map.of("tokens" ,tokenResponse((User) user));
+        return Map.of("tokens" , tokenResponse((User) user));
     }
 
     public Map<String, Object> auth(AuthRequest authRequest) {

@@ -1,5 +1,6 @@
 package relucky.code.technicaltask2.domain.repository;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -7,7 +8,6 @@ import relucky.code.technicaltask2.common.enums.Role;
 import relucky.code.technicaltask2.domain.entity.Task;
 import relucky.code.technicaltask2.domain.entity.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,6 +19,12 @@ class TaskRepositoryTest {
     private TaskRepository taskRepository;
     @Autowired
     private UserRepository userRepository;
+
+    @AfterEach
+    void tearDown() {
+        taskRepository.deleteAll();
+        userRepository.deleteAll();
+    }
 
     @Test
     void testFindAllByUser_whenUserHaveTask_returnListTask() {
@@ -32,6 +38,7 @@ class TaskRepositoryTest {
         taskRepository.saveAll(taskList);
         // when
         List<Task> tasks = taskRepository.findAllByUser(user);
+        System.out.println(tasks.get(0).getTitle());
         // then
         assertThat(tasks).isNotEmpty().hasSize(2);
     }
