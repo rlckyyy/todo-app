@@ -32,7 +32,10 @@ class UserRepositoryTest {
 
     @Test
     void  testFindByEmail_WhenEmailDontExist_ShouldReturnEmptyOptional(){
+        // given null user email
         Optional<User> foundUser = userRepository.findByEmail("bekagay@gmail.com");
-        assertThat(foundUser).isEmpty();
+        // when trynna take null user value
+        //then should be empty list
+        assertThat(foundUser).isNotPresent();
     }
 }
