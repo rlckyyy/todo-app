@@ -22,7 +22,6 @@ import relucky.code.technicaltask2.domain.repository.TaskRepository;
 import relucky.code.technicaltask2.domain.repository.UserRepository;
 import relucky.code.technicaltask2.domain.service.MinioService;
 
-import java.io.FileNotFoundException;
 import java.util.Optional;
 import java.util.UUID;
 
