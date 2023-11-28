@@ -10,9 +10,7 @@ import relucky.code.technicaltask2.domain.dto.TaskDTO;
 import relucky.code.technicaltask2.domain.entity.Task;
 import relucky.code.technicaltask2.domain.entity.User;
 import relucky.code.technicaltask2.domain.mapper.TaskMapper;
-import relucky.code.technicaltask2.domain.repository.FileRepository;
 import relucky.code.technicaltask2.domain.repository.TaskRepository;
-import relucky.code.technicaltask2.domain.repository.UserRepository;
 import relucky.code.technicaltask2.domain.service.TaskService;
 import relucky.code.technicaltask2.domain.service.UserService;
 
@@ -25,8 +23,6 @@ import java.util.Optional;
 public class TaskServiceImpl implements TaskService {
     private final TaskMapper taskMapper;
     private final TaskRepository taskRepository;
-    private final UserRepository userRepository;
-    private final FileRepository fileRepository;
     private final UserService userService;
     @Override
     public TaskDTO createTask(TaskDTO taskDTO) {

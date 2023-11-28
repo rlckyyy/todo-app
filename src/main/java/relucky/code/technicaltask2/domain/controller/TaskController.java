@@ -1,12 +1,14 @@
 package relucky.code.technicaltask2.domain.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import relucky.code.technicaltask2.domain.dto.FileDTO;
 import relucky.code.technicaltask2.domain.dto.TaskDTO;
 import relucky.code.technicaltask2.domain.service.MinioService;
 import relucky.code.technicaltask2.domain.service.TaskService;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -15,27 +17,27 @@ public class TaskController {
     private final TaskService taskService;
     private final MinioService minioService;
     @PostMapping("/create")
-    ResponseEntity<?> createTask(@RequestBody TaskDTO taskDTO){
-        return ResponseEntity.ok(taskService.createTask(taskDTO));
+    TaskDTO createTask(@RequestBody TaskDTO taskDTO){
+        return taskService.createTask(taskDTO);
     }
     @DeleteMapping("/delete/{id}")
-    ResponseEntity<?> deleteTask(@PathVariable Long id){
-        return ResponseEntity.ok(taskService.deleteTask(id));
+    TaskDTO deleteTask(@PathVariable Long id){
+        return taskService.deleteTask(id);
     }
     @GetMapping
-    ResponseEntity<?> getAllTask(){
-        return ResponseEntity.ok(taskService.findAllTask());
+    List<TaskDTO> getAllTask(){
+        return taskService.findAllTask();
     }
     @GetMapping("{id}")
-    ResponseEntity<?> getOne(@PathVariable Long id){
-        return ResponseEntity.ok(taskService.findTask(id));
+    TaskDTO getOne(@PathVariable Long id){
+        return taskService.findTask(id);
     }
     @PostMapping("/upload/{id}")
-    ResponseEntity<?> uploadFileToTask(@PathVariable Long id, @RequestParam("file") MultipartFile multipartFile){
-        return ResponseEntity.ok(minioService.uploadFile(multipartFile,id));
+    FileDTO uploadFileToTask(@PathVariable Long id, @RequestParam("file") MultipartFile multipartFile){
+        return minioService.uploadFile(multipartFile,id);
     }
     @DeleteMapping("/{taskId}/files/{fileId}")
-    ResponseEntity<?> deleteFileFromTask(@PathVariable("taskId") Long taskId, @PathVariable("fileId") Long fileId){
-        return ResponseEntity.ok(minioService.deleteFile(fileId, taskId));
+    FileDTO deleteFileFromTask(@PathVariable("taskId") Long taskId, @PathVariable("fileId") Long fileId){
+        return minioService.deleteFile(fileId, taskId);
     }
 }

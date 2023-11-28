@@ -1,10 +1,8 @@
 package relucky.code.technicaltask2.domain.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import relucky.code.technicaltask2.domain.dto.UserDTO;
-import relucky.code.technicaltask2.domain.entity.User;
 import relucky.code.technicaltask2.domain.service.UserService;
 
 import java.util.List;
