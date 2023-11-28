@@ -30,7 +30,7 @@ public class AuthService {
 
     public TokenResponse register(UserDTO dto) {
         if (userRepository.findByEmail(dto.email()).isPresent()){
-            throw new EmailRegisteredYet(dto.email() + "already exists in system");
+            throw new EmailRegisteredYet(dto.email() + " already exists in system");
         }
         var user = userMapper.toModel(dto);
         user.setRole(Role.USER);

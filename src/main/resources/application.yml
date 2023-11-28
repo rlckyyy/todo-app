@@ -12,13 +12,10 @@ jwt:
   secret: sp89ZFwF32uU9Ot6O1a8Ir/QDDwxI/NyLVDMJfNljMREzlSXmMtenqgQquuat8heMrtlwdVqNSPxEvxUpJXVEw3tafWgBM9PPX/V9MpQaKrZqwlpvfIEAqVByWprTip66bZW42z4/GoTnK4ZdVjxTLnV4BpqnHFOARaelBzD7NnML4eMxxrM7uFQVcXTmPM2qAkZnsYyvJMKQ1Ks43AQJgjRKlLKRx05hdl1vMh5H9HQK9bUxT4olp98S9KBQ9B43DF0wpa9ZXHA22JemthCPnAsWbITKxEl8lZ7PTAUi8C+g33oJUOd8aBWd8Q2IY+exUmt2lmiOQeCy/6xiUPO9cyOnDiD7iBaLD9E+7W2VZw=
   issuer: relucky
 
+
 minio:
   url: http://localhost:9001
   bucket: file-system
   access-key: minioadmin
   secret-key: minioadmin
   port: 9000
-
-app:
-  otp:
-    expiration: 180
