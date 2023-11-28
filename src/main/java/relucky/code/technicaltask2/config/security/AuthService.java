@@ -6,15 +6,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import relucky.code.technicaltask2.common.enums.Role;
-import relucky.code.technicaltask2.common.exception.EmailAlreadyRegistered;
+import relucky.code.technicaltask2.common.exception.EmailRegisteredYet;
 import relucky.code.technicaltask2.common.payload.request.AuthRequest;
 import relucky.code.technicaltask2.common.payload.response.TokenResponse;
 import relucky.code.technicaltask2.domain.dto.UserDTO;
 import relucky.code.technicaltask2.domain.entity.User;
 import relucky.code.technicaltask2.domain.mapper.UserMapper;
 import relucky.code.technicaltask2.domain.repository.UserRepository;
-
-import java.util.Map;
 
 import static relucky.code.technicaltask2.common.enums.TokenType.ACCESS;
 import static relucky.code.technicaltask2.common.enums.TokenType.REFRESH;
@@ -32,7 +30,7 @@ public class AuthService {
 
     public TokenResponse register(UserDTO dto) {
         if (userRepository.findByEmail(dto.email()).isPresent()){
-            throw new EmailAlreadyRegistered(dto.email() + "already exists in system");
+            throw new EmailRegisteredYet(dto.email() + "already exists in system");
         }
         var user = userMapper.toModel(dto);
         user.setRole(Role.USER);

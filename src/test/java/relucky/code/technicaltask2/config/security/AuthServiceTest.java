@@ -6,10 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import relucky.code.technicaltask2.common.exception.EmailAlreadyRegistered;
-import relucky.code.technicaltask2.common.payload.request.AuthRequest;
-import relucky.code.technicaltask2.common.payload.response.TokenResponse;
+import relucky.code.technicaltask2.common.exception.EmailRegisteredYet;
 import relucky.code.technicaltask2.domain.dto.UserDTO;
 import relucky.code.technicaltask2.domain.entity.User;
 import relucky.code.technicaltask2.domain.mapper.UserMapper;
@@ -78,7 +75,7 @@ public class AuthServiceTest {
         when(userRepository.findByEmail(dto.email())).thenReturn(Optional.of(user));
 
         // Act & Assert
-        assertThrows(EmailAlreadyRegistered.class, () -> authService.register(dto));
+        assertThrows(EmailRegisteredYet.class, () -> authService.register(dto));
         verify(userRepository).findByEmail(dto.email());
         verify(userMapper, never()).toModel(dto);
     }
