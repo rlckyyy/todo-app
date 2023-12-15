@@ -13,7 +13,7 @@ import java.util.List;
 public class AdminController {
     private final UserService userService;
     @DeleteMapping("/{id}")
-    UserDTO deleteUser(@PathVariable Long id){
+    UserDTO deleteUser(@PathVariable String id){
         return userService.deleteUser(id);
     }
     @GetMapping
@@ -22,7 +22,7 @@ public class AdminController {
     }
 
     @GetMapping("/{id}")
-    UserDTO getUserInfo(@PathVariable Long id){
+    UserDTO getUserInfo(@PathVariable String id){
         return userService.findOne(id);
     }
 }

@@ -14,4 +14,3 @@ public enum TokenType {
     private final SignatureAlgorithm algorithm;
 
 }
-

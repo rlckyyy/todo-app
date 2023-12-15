@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     @Override
-    public UserDTO deleteUser(Long id) {
+    public UserDTO deleteUser(String id) {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO findOne(Long id) {
+    public UserDTO findOne(String id) {
         return userMapper.toDTO(userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User with this id does not exist")));
     }

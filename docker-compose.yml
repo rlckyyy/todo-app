@@ -1,16 +1,15 @@
 services:
-  postgres:
-    image: postgres
-    container_name: todo-postgres
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      PGDATA: /data/postgres
-      POSTGRES_DB: test
+  mongo:
+    container_name: mongo-db
+    image: mongo
+    restart: always
     ports:
-      - "5433:5432"
+      - "27017:27017"
     volumes:
-      - postgres:/data/postgres
+      - mongo:/data/mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongouser
+      MONGO_INITDB_ROOT_PASSWORD: mongopassword
   minio:
     container_name: todo-minio
     image: minio/minio:latest
@@ -26,5 +25,5 @@ services:
       - minio_storage:/data
     command: server --console-address ":9001" /data
 volumes:
-  postgres:
+  mongo:
   minio_storage:

@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 import relucky.code.technicaltask2.config.security.JwtFilter;
 
 import static relucky.code.technicaltask2.common.enums.Role.ADMIN;
@@ -32,12 +33,13 @@ public class SecurityConfig {
             "/configuration/ui",
             "/configuration/security",
             "/swagger-ui/**",
-            "/webjars/**",
-            "/swagger-ui.html"};
+            "/webjars/**"};
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
+                .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer
+                        .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()))
                 .authorizeHttpRequests( req -> req.requestMatchers(WHITE_LIST_URL).permitAll()
                         .requestMatchers("/api/v1/task/**").hasAnyRole(ADMIN.name(), USER.name())
                         .requestMatchers("/api/v1/admin/**").hasRole(ADMIN.name())

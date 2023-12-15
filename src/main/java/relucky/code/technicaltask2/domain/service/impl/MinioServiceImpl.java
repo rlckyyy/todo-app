@@ -16,7 +16,6 @@ import relucky.code.technicaltask2.domain.entity.User;
 import relucky.code.technicaltask2.domain.mapper.FileMapper;
 import relucky.code.technicaltask2.domain.repository.FileRepository;
 import relucky.code.technicaltask2.domain.repository.TaskRepository;
-import relucky.code.technicaltask2.domain.repository.UserRepository;
 import relucky.code.technicaltask2.domain.service.MinioService;
 import relucky.code.technicaltask2.domain.service.UserService;
 
@@ -52,7 +51,7 @@ public class MinioServiceImpl implements MinioService {
 
 
     @Override
-    public FileDTO uploadFile(MultipartFile file, Long taskId){
+    public FileDTO uploadFile(MultipartFile file, String taskId){
         Optional<Task> taskOptional = taskRepository.findById(taskId);
         User currentUser = userService.getUser();
 
@@ -83,7 +82,7 @@ public class MinioServiceImpl implements MinioService {
 
 
     @Override
-    public FileDTO deleteFile(Long fileId, Long taskId){
+    public FileDTO deleteFile(String fileId, String taskId){
         User currentUser = userService.getUser();
         Optional<Task> taskOptional = taskRepository.findById(taskId);
         if (taskOptional.isEmpty()){

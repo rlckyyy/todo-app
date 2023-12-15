@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface TaskService {
     TaskDTO createTask(TaskDTO taskDTO);
-    TaskDTO deleteTask(Long id);
+    TaskDTO deleteTask(String id);
     List<TaskDTO> findAllTask();
-    TaskDTO findTask(Long id);
+    TaskDTO findTask(String id);
 }

@@ -1,8 +1,9 @@
 package relucky.code.technicaltask2.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,23 +12,20 @@ import relucky.code.technicaltask2.common.enums.Role;
 import java.util.Collection;
 import java.util.List;
 
-@Entity
+
+@Document(collection = "users")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter@Setter
-@Table(name = "users")
 @Builder
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     private String name;
     private String email;
     private Integer age;
     private String password;
-    @Enumerated(EnumType.STRING)
     private Role role;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Task> taskList;
 

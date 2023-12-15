@@ -6,8 +6,8 @@ import relucky.code.technicaltask2.domain.entity.User;
 import java.util.List;
 
 public interface UserService {
-    UserDTO deleteUser(Long id);
+    UserDTO deleteUser(String id);
     List<UserDTO> findAll();
-    UserDTO findOne(Long id);
+    UserDTO findOne(String id);
     User getUser();
 }
