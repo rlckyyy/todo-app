@@ -7,8 +7,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 
 @Document(collection = "task")
+@Data
 @AllArgsConstructor@NoArgsConstructor
-@Getter@Setter
 @Builder
 public class Task {
     @Id

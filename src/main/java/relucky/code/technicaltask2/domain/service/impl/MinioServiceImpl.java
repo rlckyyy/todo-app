@@ -4,6 +4,7 @@ import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
 import io.minio.RemoveObjectArgs;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import relucky.code.technicaltask2.common.exception.CFileNotFoundException;
@@ -22,6 +23,7 @@ import relucky.code.technicaltask2.domain.service.UserService;
 import java.util.Optional;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MinioServiceImpl implements MinioService {
@@ -54,17 +56,14 @@ public class MinioServiceImpl implements MinioService {
     public FileDTO uploadFile(MultipartFile file, String taskId){
         Optional<Task> taskOptional = taskRepository.findById(taskId);
         User currentUser = userService.getUser();
-
+        log.info("Task list of user: " + currentUser.getTaskList());
         if (taskOptional.isEmpty()) {
             throw new TaskNotFoundException("Task with id: " + taskId + " does not exist");
         }
-
         Task task = taskOptional.get();
-
         if (!currentUser.getTaskList().contains(task)) {
             throw new UnauthorizedAccessException("User does not have access to task with id: " + taskId);
         }
-
         try {
             String minioPath = uploadFileToMinio(file);
             File fileEntity = File.builder()

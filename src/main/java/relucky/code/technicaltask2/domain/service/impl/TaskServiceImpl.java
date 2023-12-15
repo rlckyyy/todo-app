@@ -60,7 +60,6 @@ public class TaskServiceImpl implements TaskService {
     public TaskDTO findTask(String id) {
         User currentUser = userService.getUser();
         Optional<Task> taskOptional = taskRepository.findById(id);
-        System.out.println(taskOptional.get().getUser() + " " + currentUser);
         if (taskOptional.isPresent() && taskOptional.get().getUser().equals(currentUser)){
             return taskMapper.toDto(taskOptional.get());
         } else {

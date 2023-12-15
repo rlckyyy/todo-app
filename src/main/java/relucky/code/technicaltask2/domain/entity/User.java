@@ -1,6 +1,5 @@
 package relucky.code.technicaltask2.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,9 +13,8 @@ import java.util.List;
 
 
 @Document(collection = "users")
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter@Setter
+@Data
+@AllArgsConstructor@NoArgsConstructor
 @Builder
 public class User implements UserDetails {
     @Id
@@ -26,7 +24,6 @@ public class User implements UserDetails {
     private Integer age;
     private String password;
     private Role role;
-    @JsonIgnore
     private List<Task> taskList;
 
     public User(String name, String email, Integer age, String password, Role role) {
@@ -39,8 +36,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        var list = List.of(new SimpleGrantedAuthority("ROLE_".concat(role.name())));
-        return list;
+        return List.of(new SimpleGrantedAuthority("ROLE_".concat(role.name())));
     }
 
     @Override

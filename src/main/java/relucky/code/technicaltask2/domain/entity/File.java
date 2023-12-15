@@ -6,8 +6,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "task")
+@Data
 @AllArgsConstructor@NoArgsConstructor
-@Getter@Setter
 @Builder
 public class File {
     @Id
